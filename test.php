@@ -1,3 +1,3 @@
 <?php
-  echo "Php works!"
- ?>
+  echo "Php works!";
+?>
