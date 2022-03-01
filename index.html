@@ -18,6 +18,7 @@
 	<style type="text/css">
 		body{
 			background-color: #006c66;
+			font-family: 'Poppins';
 		}
 		.main{
 			height: 100vh;
@@ -29,7 +30,7 @@
                 <div class="panel panel-default border p-3">
 
                 	<h4>Interested in purchasing the domain</h4>
-                	<h2>airdropnft.io ?</h2>
+                	<h2 class="text-center text-white">airdropnft.io ?</h2>
 
                 	<p>Please submit your offer below:</p>
 					
@@ -48,7 +49,7 @@
 						  <input type="text" id="email" class="form-control" placeholder="Your Email" aria-label="Your Email">
 						</div>
 
-						<button class="btn btn-sucess" id="submit">Submit</button>
+						<button class="btn btn-success" id="submit">Submit</button>
 					</form>
 
 					<hr>
@@ -73,9 +74,12 @@
 	</div>
 
 	<script type="text/javascript">
-		$('#submit').on('click', function(){
-			  $('.notification_message').html('Saved!');
-			  $('.toast').toast('show');
+		$(window).on('load', function() {
+			$('#submit').on('click', function(){
+				  $('.notification_message').html('Saved!');
+				  $('.toast').toast('show');
+				  return false;
+			});
 		});
 	</script>
 </body>
