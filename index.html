@@ -42,16 +42,16 @@
 					<form>
 						<div class="input-group mb-3">
 						  <div class="input-group-prepend">
-						    <span class="input-group-text" id="basic-addon1">$</span>
+						    <span class="input-group-text" id="basic-addon1">Your Offer ($)</span>
 						  </div>
-						  <input type="number" id="offer" class="form-control" placeholder="Your Offer" aria-label="Your Offer">
+						  <input type="number" id="offer" class="form-control">
 						</div>
 
 						<div class="input-group mb-3">
 						  <div class="input-group-prepend">
-						    <span class="input-group-text" id="basic-addon1">Email</span>
+						    <span class="input-group-text" id="basic-addon1">Your Email</span>
 						  </div>
-						  <input type="text" id="email" class="form-control" placeholder="Your Email" aria-label="Your Email">
+						  <input type="text" id="email" class="form-control">
 						</div>
 
 						<button class="btn btn-success" id="submit">Submit</button>
@@ -90,39 +90,56 @@
 			$('#submit').on('click', function(){
 
 				const submitBtn = $("#submit");
+				const offer = $("#offer").val();
+				const email = $("#email").val();
 
-				var formData = new FormData();    
-			    formData.append( 'key', '#%gdf2.GT12{]|' );
-			    formData.append( 'offer', $("#offer").val() );
-			    formData.append( 'email', $("#email").val() );
+				if (offer < 1) {
+					show_notification('<small>Enter a valid offer amount</small>');
+					$("#offer").focus();
+					return false;
+				}
 
-			    submitBtn.prop('disabled', true); 
-			    $.ajax({
-		           url : 'https://api.ontologyofvalue.com/airdropnft.io/index.php',
-		           type : 'POST',
-		           data : formData,
-		           processData: false,
-		           contentType: false,
-		            success: function (data) {
-		                show_notification(data);
-		              },
-					error: function(XMLHttpRequest, textStatus, errorThrown) {
-						if (XMLHttpRequest.readyState === 0) {
-						    show_notification( 'Check your network connection and try again!' );
-						}
-						else {
-						    show_notification( 'Something went wrong. Try again!' );
-						}
-					},
-		            complete: 
-			            setTimeout(
-			                function(){
-			    				submitBtn.prop('disabled', false); 
-			                },
-			            50)
-		        });
+				if (email.length < 5) {
+					show_notification('<small>Enter a valid email address</small>');
+					$("#email").focus();
+					return false;
+				}
 
-			  	return false;
+				else{
+
+					var formData = new FormData();    
+				    formData.append( 'key', '#%gdf2.GT12{]|' );
+				    formData.append( 'offer', $("#offer").val() );
+				    formData.append( 'email', $("#email").val() );
+
+				    submitBtn.prop('disabled', true); 
+				    $.ajax({
+			           url : 'https://api.ontologyofvalue.com/airdropnft.io/index.php',
+			           type : 'POST',
+			           data : formData,
+			           processData: false,
+			           contentType: false,
+			            success: function (data) {
+			                show_notification(data);
+			              },
+						error: function(XMLHttpRequest, textStatus, errorThrown) {
+							if (XMLHttpRequest.readyState === 0) {
+							    show_notification( 'Check your network connection and try again!' );
+							}
+							else {
+							    show_notification( 'Something went wrong. Try again!' );
+							}
+						},
+			            complete: 
+				            setTimeout(
+				                function(){
+				    				submitBtn.prop('disabled', false); 
+				                },
+				            50)
+			        });
+
+				  	return false;
+				}
 
 			});
 		});
