@@ -94,13 +94,13 @@
 				const email = $("#email").val();
 
 				if (offer < 1) {
-					show_notification('<small>Enter a valid offer amount</small>');
+					show_notification('<small class="text-danger">Enter a valid offer amount</small>');
 					$("#offer").focus();
 					return false;
 				}
 
 				if (email.length < 5) {
-					show_notification('<small>Enter a valid email address</small>');
+					show_notification('<small class="text-danger">Enter a valid email address</small>');
 					$("#email").focus();
 					return false;
 				}
