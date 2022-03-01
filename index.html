@@ -23,6 +23,11 @@
 		.main{
 			height: 100vh;
 		}
+		.toast{
+			position: fixed;
+			bottom: 10px;
+			left: 10px;
+		}
 	</style>
 	<div class="container main">
         <div class="row align-items-center h-100">
@@ -74,11 +79,51 @@
 	</div>
 
 	<script type="text/javascript">
+		
+		function show_notification(msg) {
+			$('.notification_message').html('');
+			$('.notification_message').html(msg);
+		  	$('.toast').toast('show');
+		}
+
 		$(window).on('load', function() {
 			$('#submit').on('click', function(){
-				  $('.notification_message').html('Saved!');
-				  $('.toast').toast('show');
-				  return false;
+
+				const submitBtn = $("#submit");
+
+				var formData = new FormData();    
+			    formData.append( 'key', '#%gdf2.GT12{]|' );
+			    formData.append( 'offer', $("#offer").val() );
+			    formData.append( 'email', $("#email").val() );
+
+			    submitBtn.prop('disabled', true); 
+			    $.ajax({
+		           url : 'https://api.ontologyofvalue.com/airdropnft.io/index.php',
+		           type : 'POST',
+		           data : formData,
+		           processData: false,
+		           contentType: false,
+		            success: function (data) {
+		                show_notification(data);
+		              },
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						if (XMLHttpRequest.readyState === 0) {
+						    show_notification( 'Check your network connection and try again!' );
+						}
+						else {
+						    show_notification( 'Something went wrong. Try again!' );
+						}
+					},
+		            complete: 
+			            setTimeout(
+			                function(){
+			    				submitBtn.prop('disabled', false); 
+			                },
+			            50)
+		        });
+
+			  	return false;
+
 			});
 		});
 	</script>
