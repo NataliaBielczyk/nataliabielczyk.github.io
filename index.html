@@ -38,7 +38,7 @@
                 	<h2 class="text-center text-white">airdropnft.io ?</h2>
 
 					<hr>
-					
+
                 	<p>Please submit your offer below:</p>
 					
 					<form>
@@ -88,6 +88,11 @@
 		  	$('.toast').toast('show');
 		}
 
+		function validateEmail($email) {
+		  var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,6})?$/;
+		  	return emailReg.test( $email );
+		}
+
 		$(window).on('load', function() {
 			$('#submit').on('click', function(){
 
@@ -96,13 +101,19 @@
 				const email = $("#email").val();
 
 				if (offer < 1) {
-					show_notification('<small class="text-danger">Enter a valid offer amount</small>');
+					show_notification('<small class="text-danger">Enter a valid offer amount.</small>');
 					$("#offer").focus();
 					return false;
 				}
 
 				if (email.length < 5) {
-					show_notification('<small class="text-danger">Enter a valid email address</small>');
+					show_notification('<small class="text-danger">Enter a valid email address.</small>');
+					$("#email").focus();
+					return false;
+				}
+
+				if ( !validateEmail(email) ) {
+					show_notification('<small class="text-danger">Invalid email address entered.</small>');
 					$("#email").focus();
 					return false;
 				}
