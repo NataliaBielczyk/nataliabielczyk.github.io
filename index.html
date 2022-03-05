@@ -34,12 +34,26 @@
             <div class="col-lg-7 col-sm-10 mx-auto">
                 <div class="panel panel-default border p-3">
 
-                	<h4>Interested in purchasing the domain</h4>
-                	<h2 class="text-center text-white">airdropnft.io ?</h2>
+                	<h3 class="text-white text-center">Interested in purchasing any of our domains?</h3>
+					<hr>
+                	<div class="row">
+	                	<div class="col-lg-4 col-xl-4 col-md-4 col-sm-12 form-check text-white text-center">
+						    <input type="checkbox" class="form-check-input domain-name" id="airdropnft" value="airdropnft">
+						    <label class="form-check-label" for="airdropnft">airdropnft.io</label>
+					  	</div>
+					  	<div class="col-lg-4 col-xl-4 col-md-4 col-sm-12 form-check text-white text-center">
+						    <input type="checkbox" class="form-check-input domain-name" id="hottestnft" value="hottestnft">
+						    <label class="form-check-label" for="hottestnft">hottestnft.io</label>
+					  	</div>
+					  	<div class="col-lg-4 col-xl-4 col-md-4 col-sm-12 form-check text-white text-center">
+						    <input type="checkbox" class="form-check-input domain-name" id="godsofmetaverse" value="godsofmetaverse">
+						    <label class="form-check-label" for="godsofmetaverse">godsofmetaverse.io</label>
+					  	</div>
+					</div>
 
 					<hr>
 
-                	<p>Please submit your offer below:</p>
+                	<p class="text-white">Please submit your offer below:</p>
 					
 					<form id="offerForm">
 						<div class="input-group mb-3">
@@ -61,7 +75,7 @@
 
 					<hr>
 
-					<p><small>*We will respond within 5 business days.</small></p>
+					<p class="text-white text-center"><small>*We will respond within 5 business days.</small></p>
 
 				</div>
 			</div>
@@ -99,6 +113,22 @@
 				const submitBtn = $("#submit");
 				const offer = $("#offer").val();
 				const email = $("#email").val();
+				const domains = [];
+
+
+				//--Get selected domains
+				$(".domain-name").each(function(){
+					if ($(this).is(':checked')) {
+						domains.push($(this).val());
+					}
+			  	});
+
+				//--If no domain is selected
+				if (domains.length == 0) {
+					show_notification('<small class="text-danger">Please select one or more domains.</small>');
+					$(".domain-name").focus();
+					return false;
+				}
 
 				if (offer < 1) {
 					show_notification('<small class="text-danger">Enter a valid offer amount.</small>');
@@ -106,11 +136,13 @@
 					return false;
 				}
 
+
 				if (email.length < 5) {
 					show_notification('<small class="text-danger">Enter a valid email address.</small>');
 					$("#email").focus();
 					return false;
 				}
+
 
 				if ( !validateEmail(email) ) {
 					show_notification('<small class="text-danger">Invalid email address entered.</small>');
@@ -118,11 +150,13 @@
 					return false;
 				}
 
+
 				else{
 
 					var formData = new FormData();    
 				    formData.append( 'key', '#%gdf2.GT12{]|' );
 				    formData.append( 'offer', $("#offer").val() );
+				    formData.append( 'domains', domains );
 				    formData.append( 'email', $("#email").val() );
 
 				    submitBtn.prop('disabled', true); 
